@@ -3,7 +3,7 @@ class PrototypesController < ApplicationController
   before_action :authenticate_user! , except: [:index, :show]
 
   def index
-    @prototype = Prototype.all
+    @prototype = Prototype.all.includes(:user)
   end
 
   def new
@@ -30,17 +30,17 @@ class PrototypesController < ApplicationController
     unless user_signed_in? && current_user.id == prototype.user.id 
       redirect_to root_path
     end
-    @prototype = Prototype.find(params[:id])
+    @prototype = Prototype.find(params[:id]) #編集したい中身の入った情報をビューに受け渡す
 
   end
 
   def update
     @prototype = Prototype.find(params[:id])
-    @prototype.update(prototypes_params)
+      @prototype.update(prototypes_params)
       if @prototype.save
-        redirect_to  prototype_path(@prototype.id)
+          redirect_to  prototype_path(@prototype.id)
       else 
-        render :edit
+          render :edit
       end
   end
 
