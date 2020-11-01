@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   def create
-    if @comment = Comment.create(comment_params)
-    redirect_to prototype_path(@comment.prototype.id)
+    if @comment = Comment.create(comment_params) #ストパラでプロトタイプのid情報も取ってきている
+    redirect_to prototype_path(@comment.prototype.id) #コメントに対してのプロトタイプを一つ取得することができる@prototype.commentsの逆パターン
   else
     render "prototype/show"
   end
